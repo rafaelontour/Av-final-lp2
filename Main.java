@@ -9,7 +9,6 @@ public class Main {
 
         while (true) {
             Menu.mostrarMenu(mercado1);
-
             e = op.nextInt();
 
             switch (e) {
@@ -40,9 +39,13 @@ public class Main {
                         String nomeP;
                         System.out.print("Digite o nome do produto a ser consultado: ");
                         nomeP = op.nextLine();
-                        Menu.limparTela();
-                        mercado1.consultar(nomeP.toUpperCase());
-                        Menu.limparTela();
+
+                        if (mercado1.verificarProduto(nomeP.toUpperCase())) {
+                            Menu.limparTela();
+                            mercado1.consultar(nomeP.toUpperCase());
+                        } else {
+                            System.out.println("Produto não cadastrado.");
+                        }
 
                     }
                     break;
@@ -53,12 +56,21 @@ public class Main {
                     } else {
                         mercado1.imprimir();
                         String pa;
-                        System.out.println("Insira o nome do produto que deseja alterar: ");
-                        pa = op.nextLine();
+                        System.out.print("Insira o nome do produto que deseja alterar: ");
 
-                        mercado1.alterar(pa.toUpperCase());
-                        Menu.limparTela();
+                        pa = op.nextLine();
+                        pa = op.nextLine();
+                        
+                        if (mercado1.verificarProduto(pa.toUpperCase())) {
+                            mercado1.alterar(pa.toUpperCase());
+                            Menu.limparTela();
+                        } else {
+                            System.out.println("Produto não cadastrado.");
+                        }
+
+
                     }
+                    break;
 
 
                 case 4:
@@ -66,22 +78,32 @@ public class Main {
                         System.out.println("Não há produtos para remover.");
                         Menu.limparTela();
                     } else {
-                        String pr;
-                        mercado1.imprimir();
-                        System.out.println("Qual produto deseja remover?: ");
-                        pr = op.nextLine();
-                        pr = op.nextLine();
+                        if (mercado1.getListaDeProdutos().size() == 1) {
+                            mercado1.getListaDeProdutos().remove(0);
+                            System.out.println("Produto removido.");
+                        } else {
+                            String pr;
+                            mercado1.imprimir();
+                            System.out.print("Qual produto deseja remover?: ");
+                            
+                            pr = op.nextLine();
+                            pr = op.nextLine();
 
-                        mercado1.excluir(pr.toUpperCase());
-                        Menu.limparTela();
+                            mercado1.excluir(pr.toUpperCase());
+                            Menu.limparTela();
+                        }
+
                     }
                     break;
                 case 5:
                     mercado1.imprimir();
                     break;
+                case 6:
+                    break;
                 default:
                     System.out.println("Opção inválida!");
             }
+            break;
         }
     }
 }

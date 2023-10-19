@@ -15,11 +15,17 @@ public class Mercado implements InterfaceMercado {
         this.endereco = endereco;
     }
 
+    // Getter
+    ArrayList getListaDeProdutos() {
+        return this.listaDeProdutos;
+    }
+
     // Outros métodos
     @Override
     public void adicionar(String nome, float preco, int qtd) {
         Produto p = new Produto(nome, preco, qtd);
         listaDeProdutos.add(p);
+        
     }
 
     @Override
@@ -43,15 +49,15 @@ public class Mercado implements InterfaceMercado {
                 float preco;
                 int qtd;
 
-                System.out.println("Digite o nome do novo produto: ");
+                System.out.print("Digite o nome do novo produto: ");
                 nome = op.nextLine();
-                listaDeProdutos.get(c).setNome(nome);
+                listaDeProdutos.get(c).setNome(nome.toUpperCase());
 
-                System.out.println("Digite o novo preço: R$" );
+                System.out.print("Digite o novo preço: R$" );
                 preco = op.nextFloat();
                 listaDeProdutos.get(c).setPreco(preco);
 
-                System.out.println("Digite a quantidade nova: ");
+                System.out.print("Digite a quantidade nova: ");
                 qtd = op.nextInt();
                 listaDeProdutos.get(c).setQtd(qtd);
 
@@ -62,12 +68,19 @@ public class Mercado implements InterfaceMercado {
 
     @Override
     public void excluir(String item) {
+        int check = 0;
         for (int c = 0;c < listaDeProdutos.size();c++) {
             if (listaDeProdutos.get(c).getNome().equals(item)) {
                 System.out.println("Produto '" + listaDeProdutos.get(c).getNome() + "' removido!");
                 listaDeProdutos.remove(c);
+                check++;
+                break;
             }
         }
+        if (check == 0) {
+            System.out.println("Produto não cadastrado!");
+        }
+
     }
 
     @Override
@@ -88,5 +101,17 @@ public class Mercado implements InterfaceMercado {
         if (this.listaDeProdutos.size() == 0) {
             return false;
         } else { return true; }
+    }
+
+    boolean verificarProduto(String pa) {
+        boolean r = false;
+        for (int c = 0;c < listaDeProdutos.size();c++) {
+            if (listaDeProdutos.get(c).getNome().equals(pa)) {
+                r = true;
+            } else {
+                r = false;
+            }
+        }
+        return r;
     }
 }
