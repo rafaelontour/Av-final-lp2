@@ -1,11 +1,12 @@
 package src.mercado;
 import java.util.ArrayList;
 
-class Produto {
+abstract class Produto {
 
     // Atributos
     private ArrayList<Produto> listaDeProdutos;
     private String nome;
+    private String tipo;
     private float preco;
     private int qtd;
 
@@ -20,6 +21,7 @@ class Produto {
     public String getNome() { return this.nome; }
     public float getPreco() { return this.preco; }
     public int getQtd() { return this.qtd; }
+    public String getTipo() { return this.tipo; }
 
     // Setter
     void setNome(String nome) { this.nome = nome; }

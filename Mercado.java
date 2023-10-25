@@ -1,4 +1,6 @@
 package src.mercado;
+import com.sun.jdi.Value;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -7,12 +9,14 @@ public class Mercado implements InterfaceMercado {
     //Atributos 
     private String nome;
     private String endereco;
-    private  ArrayList<Produto> listaDeProdutos = new ArrayList<>();
+    private ArrayList<Produto> listaDeProdutos = new ArrayList<>();
+    private Estoque estoque;
 
     // Construtor
     public Mercado(String nome, String endereco) {
         this.nome = nome;
         this.endereco = endereco;
+        this.estoque = new Estoque();
     }
 
     // Getter
@@ -22,10 +26,24 @@ public class Mercado implements InterfaceMercado {
 
     // Outros métodos
     @Override
-    public void adicionar(String nome, float preco, int qtd) {
-        Produto p = new Produto(nome, preco, qtd);
-        listaDeProdutos.add(p);
-        
+    public void adicionar(String nome, float preco, int qtd, int escolha) {
+        switch (escolha) {
+            case 1:
+                ProdutoEletronico p = new ProdutoEletronico(nome, preco, qtd);
+                this.listaDeProdutos.add(p);
+                this.atualizarEstoque(p, 1);
+                break;
+            case 2:
+                ProdutoAlimento p2 = new ProdutoAlimento(nome, preco, qtd);
+                this.listaDeProdutos.add(p2);
+                this.atualizarEstoque(p2, 1);
+                break;
+            case 3:
+                ProdutoUtilidades p3 = new ProdutoUtilidades(nome, preco, qtd);
+                this.listaDeProdutos.add(p3);
+                this.atualizarEstoque(p3, 1);
+                break;
+        }
     }
 
     @Override
@@ -34,7 +52,8 @@ public class Mercado implements InterfaceMercado {
             if (listaDeProdutos.get(i).getNome().equals(nomeP)) {
                 System.out.println("\nProduto: " + listaDeProdutos.get(i).getNome());
                 System.out.println("Preço: R$" + listaDeProdutos.get(i).getPreco());
-                System.out.println("Quantidade: " + listaDeProdutos.get(i).getQtd() + "\n");
+                System.out.println("Quantidade: " + listaDeProdutos.get(i).getQtd());
+                System.out.println("Tipo: " + listaDeProdutos.get(i).getTipo() + "\n");
                 break;
             }
         }
@@ -72,11 +91,16 @@ public class Mercado implements InterfaceMercado {
         for (int c = 0;c < listaDeProdutos.size();c++) {
             if (listaDeProdutos.get(c).getNome().equals(item)) {
                 System.out.println("Produto '" + listaDeProdutos.get(c).getNome() + "' removido!");
+                this.atualizarEstoque(this.listaDeProdutos.get(c), 2);
+
                 listaDeProdutos.remove(c);
+
                 check++;
                 break;
             }
         }
+        System.out.println("ANTES DE IMPRIMIR");
+        this.imprimir();
         if (check == 0) {
             System.out.println("Produto não cadastrado!");
         }
@@ -90,7 +114,6 @@ public class Mercado implements InterfaceMercado {
             for (int c = 0;c < listaDeProdutos.size();c++) {
                 System.out.println((c + 1) + " - " + listaDeProdutos.get(c).getNome());
             }
-            System.out.println("");
         } else {
             System.out.println("Nenhum produto cadastrado.\n");
         }
@@ -113,5 +136,39 @@ public class Mercado implements InterfaceMercado {
             }
         }
         return r;
+    }
+
+    public void consultarEstoque() {
+        System.out.println("         Estoque");
+        System.out.println("***************************");
+        System.out.println("\nQuantidade total de produtos: " + estoque.getTotProdutos());
+        System.out.println("Qauntidade de produtos eletrônicos: " + estoque.getTotEletronicos());
+        System.out.println("Quantidade de produtos alimentícios: " + estoque.getTotAlimentos());
+        System.out.println("Quantidade de produtos utilitários: " + estoque.getTotUtilidades());
+        System.out.println("Valor total do estoque: R$" + estoque.getTotValorProdutos() + "\n");
+    }
+
+    private void atualizarEstoque(Produto produto, int e) {
+
+        int qtde = 0;
+
+        if (e == 1){
+            qtde = produto.getQtd();
+        } else {
+            qtde = qtde * (-1);
+        }
+
+        estoque.setTotProdutos(qtde);
+        estoque.setTotValorProdutos(produto.getPreco() * (float)qtde);
+
+        if (produto.getTipo().equals(Tipos.ELETRÔNICO.name())) {
+            estoque.setTotEletronicos(qtde);
+        }
+        if (produto.getTipo().equals(Tipos.ALIMENTOS.name())) {
+            estoque.setTotAlimentos(qtde);
+        }
+        if (produto.getTipo().equals(Tipos.UTILIDADES.name())) {
+            estoque.setTotUtilidades(qtde);
+        }
     }
 }
