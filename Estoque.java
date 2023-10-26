@@ -25,7 +25,6 @@ public class Estoque {
     public int getTotUtilidades() { return totUtilidades; }
 
     // Setter
-
     public void setTotProdutos(int totProdutos) { this.totProdutos += totProdutos; }
     public void setTotValorProdutos(float totValorProdutos) { this.totValorProdutos += totValorProdutos; }
     public void setTotEletronicos(int totEletronicos) { this.totEletronicos += totEletronicos; }

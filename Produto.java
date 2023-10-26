@@ -4,7 +4,6 @@ import java.util.ArrayList;
 abstract class Produto {
 
     // Atributos
-    private ArrayList<Produto> listaDeProdutos;
     private String nome;
     private String tipo;
     private float preco;

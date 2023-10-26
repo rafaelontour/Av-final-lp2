@@ -17,25 +17,23 @@ public class Main {
 
                     String nome;
                     float preco;
-                    int qtd, o = 9;
+                    int qtd, o;
 
                     System.out.println("Tipo de produto a cadastrar: ");
                     System.out.println(" 1 - Eletrônico");
-                    System.out.println(" 2 - Perecível (Alimentos)");
+                    System.out.println(" 2 - Alimentos");
                     System.out.println(" 3 - Utilidades");
                     System.out.print("\nEscolha uma opção: ");
 
                     o = op.nextInt(); // Opção para escolher qual construtor chamar no método adicionar da classe mercado
 
                     while (o != 1 || o != 2 || o != 3) {
-                        if (o != 1 || o != 2 || o != 3) {
-                            op.nextLine();
-                            if (o == 1 || o == 2 || o == 3) {
-                                break;
-                            }
-                            System.out.print("Digite uma opção válida: ");
-                            o = op.nextInt();
+                        op.nextLine();
+                        if (o == 1 || o == 2 || o == 3) {
+                            break;
                         }
+                        System.out.print("Digite uma opção válida: ");
+                        o = op.nextInt();
                     }
 
                     System.out.print("Nome do produto: ");
@@ -115,6 +113,22 @@ public class Main {
                     mercado1.consultarEstoque();
                     break;
                 case 7:
+                     mercado1.imprimir();
+                     System.out.print("Qual produto deseja vender?: ");
+                     String p = op.nextLine().toUpperCase();
+
+                     if (mercado1.verificarProduto(p)) {
+                         System.out.println("Produto não cadastrado.");
+                         break;
+                     }
+
+                     int qtd2;
+                     System.out.println("Quantos items deseja remover?: ");
+                     qtd2 = op.nextInt();
+
+                     mercado1.vender(p, qtd2);
+
+                case 8:
                     break;
                 default:
                     System.out.println("Opção inválida!");
@@ -133,10 +147,11 @@ public class Main {
         System.out.println("1 - Adicionar produto");
         System.out.println("2 - Consultar produto");
         System.out.println("3 - Alterar dados de um produto");
-        System.out.println("4 - Excluir dados de um produto");
+        System.out.println("4 - Excluir produto");
         System.out.println("5 - Listar produtos");
         System.out.println("6 - Consultar estoque");
-        System.out.println("7 - Sair\n");
+        System.out.println("7 - Vender um produto");
+        System.out.println("8 - Sair\n");
 
         System.out.print("Opção: ");
     }

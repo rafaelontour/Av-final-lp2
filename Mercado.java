@@ -171,4 +171,21 @@ public class Mercado implements InterfaceMercado {
             estoque.setTotUtilidades(qtde);
         }
     }
+
+    public void vender(String nome, int qtd) {
+        Produto produto = retornarProduto(nome);
+        produto.setQtd(qtd * (-1));
+        System.out.println(qtd + produto.getNome() + "s  vendidos!");
+    }
+
+    private Produto retornarProduto(String produto) {
+        Produto p = null;
+        for (int c = 0;c < this.listaDeProdutos.size();c++) {
+            if (this.listaDeProdutos.get(c).getNome().equals(produto)) {
+                p = this.listaDeProdutos.get(c);
+                break;
+            }
+        }
+        return p;
+    }
 }
