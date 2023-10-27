@@ -23,6 +23,7 @@ public class Mercado implements InterfaceMercado {
     ArrayList getListaDeProdutos() {
         return this.listaDeProdutos;
     }
+    Estoque getEstoque() { return this.estoque; }
 
     // Outros métodos
     @Override
@@ -128,8 +129,8 @@ public class Mercado implements InterfaceMercado {
 
     boolean verificarProduto(String pa) {
         boolean r = false;
-        for (int c = 0;c < listaDeProdutos.size();c++) {
-            if (listaDeProdutos.get(c).getNome().equals(pa)) {
+        for (Produto p : this.listaDeProdutos) {
+            if (p.getNome().equals(pa)) {
                 r = true;
             } else {
                 r = false;
@@ -178,7 +179,7 @@ public class Mercado implements InterfaceMercado {
         System.out.println(qtd + produto.getNome() + "s  vendidos!");
     }
 
-    private Produto retornarProduto(String produto) {
+    public Produto retornarProduto(String produto) {
         Produto p = null;
         for (int c = 0;c < this.listaDeProdutos.size();c++) {
             if (this.listaDeProdutos.get(c).getNome().equals(produto)) {

@@ -39,6 +39,36 @@ public class Main {
                     System.out.print("Nome do produto: ");
                     nome = op.nextLine();
 
+                    if (mercado1.verificarProduto(nome.toUpperCase())) {
+                        String r;
+                        System.out.print("Produto já cadastrado. Adicionar mais itens? (S/N): ");
+                        r = op.nextLine();
+
+                        if (r.equalsIgnoreCase("N")) {
+                            break;
+                        } else {
+                            int r2;
+                            System.out.print("Quantos itens quer adicionar?: ");
+                            r2 = Integer.parseInt(op.nextLine());
+                            Produto pm = mercado1.retornarProduto(nome);
+                            pm.setQtd(r2);
+
+                            Produto p2 = mercado1.retornarProduto(r);
+                            String tipo = p2.getTipo();
+
+                            if (tipo.equals(Tipos.ELETRÔNICO.name())) {
+                                
+                                mercado1.getEstoque().setTotEletronicos();
+                            }
+                            if (tipo.equals(Tipos.ALIMENTOS.name())) {
+
+                            }
+                            if (tipo.equals(Tipos.UTILIDADES.name())) {
+
+                            }
+                        }
+                    }
+
                     System.out.print("Preço: R$");
                     preco = op.nextFloat();
                     
