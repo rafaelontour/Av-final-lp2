@@ -1,7 +1,7 @@
 package src.mercado;
 
 public enum Tipos {
-    ELETRONICO(0.9f, "ELETRONICO"),
+    ELETRONICO(0.6f, "ELETRONICO"),
     ALIMENTOS(0.5f, "ALIMENTOS"),
     UTILIDADES(0.3f, "UTILIDADES");
 

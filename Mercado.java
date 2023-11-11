@@ -212,7 +212,7 @@ public class Mercado implements InterfaceMercado {
         }
 
         System.out.println("QTD: " + produto.getQtd() + " | PREÇO: " + produto.getPreco());
-        estoque.setTotValorVenda((float)qtd * produto.getPreco());
+        estoque.setTotValorVenda((float)qtd * produto.getPVenda());
         produto.setQtd(produto.getQtd() - qtd);
 
         if (qtd > 1) {
