@@ -200,23 +200,27 @@ public class Mercado implements InterfaceMercado {
     public void vender(String nome, int qtd) {
         Produto produto = retornarProduto(nome);
 
+        while (produto.getQtd() - qtd< 0) {
+            Scanner scanner = new Scanner(System.in);
+
+            System.out.print("Inválido. Digite um número acima da quantidade em estoque: ");
+            qtd = Integer.parseInt(scanner.nextLine());
+        }
+
         if (produto.getQtd() - qtd == 0) {
             listaDeProdutos.remove(produto);
         }
 
+        System.out.println("QTD: " + produto.getQtd() + " | PREÇO: " + produto.getPreco());
+        estoque.setTotValorVenda((float)qtd * produto.getPreco());
         produto.setQtd(produto.getQtd() - qtd);
-
-        System.out.println("Quantidade antes de mudar: " + produto.getQtd());
-
-        atualizarEstoque(produto, qtd);
-
-        System.out.println("Quantidade depois de mudar: " + produto.getQtd());
 
         if (qtd > 1) {
             System.out.println(qtd + " itens de " + produto.getNome() + " vendidos!");
         } else {
             System.out.println(qtd + " item de " + produto.getNome() + " vendidos!");
         }
+        atualizarEstoque(produto, qtd);
     }
 
     public Produto retornarProduto(String produto) {

@@ -87,6 +87,7 @@ public class Main {
                     } else {
                         op.nextLine();
                         String nomeP;
+
                         System.out.print("Digite o nome do produto a ser consultado: ");
                         nomeP = op.nextLine();
 
@@ -95,7 +96,6 @@ public class Main {
                         } else {
                             System.out.println("Produto não cadastrado.");
                         }
-
                     }
                     break;
                 case 3:
