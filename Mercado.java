@@ -33,17 +33,17 @@ public class Mercado implements InterfaceMercado {
             case 1:
                 ProdutoEletronico p = new ProdutoEletronico(nome, preco, qtd);
                 this.listaDeProdutos.add(p);
-                this.atualizarEstoque(p, 1);
+                this.atualizarEstoque(p, p.getQtd());
                 break;
             case 2:
                 ProdutoAlimento p2 = new ProdutoAlimento(nome, preco, qtd);
                 this.listaDeProdutos.add(p2);
-                this.atualizarEstoque(p2, 1);
+                this.atualizarEstoque(p2, p2.getQtd());
                 break;
             case 3:
                 ProdutoUtilidades p3 = new ProdutoUtilidades(nome, preco, qtd);
                 this.listaDeProdutos.add(p3);
-                this.atualizarEstoque(p3, 1);
+                this.atualizarEstoque(p3, p3.getQtd());
                 break;
         }
     }
@@ -92,7 +92,8 @@ public class Mercado implements InterfaceMercado {
                 estoque.setTotValorProdutos((float)qtd * produto.getPreco());
                 produto.setQtd(qtd);
 
-                if (produto.getTipo().equals(Tipos.ELETRONICO.getTag())) { // É preciso remover a quantidade do produto antigo, nesse caso, eletrônico, do contador de produtos eletrônicos para colocar a nova quantidade
+                // É preciso remover a quantidade do produto antigo, nesse caso, eletrônico, do contador de produtos eletrônicos para colocar a nova quantidade
+                if (produto.getTipo().equals(Tipos.ELETRONICO.getTag())) {
                     estoque.setTotEletronicos(-(estoque.getTotEletronicos()));
                     estoque.setTotEletronicos(qtd); // Colocando quantidade nova no contador
                 }
@@ -116,7 +117,7 @@ public class Mercado implements InterfaceMercado {
         for (int c = 0;c < listaDeProdutos.size();c++) {
             if (listaDeProdutos.get(c).getNome().equals(item)) {
                 System.out.println("Produto '" + listaDeProdutos.get(c).getNome() + "' removido!");
-                this.atualizarEstoque(this.listaDeProdutos.get(c), 2);
+                this.atualizarEstoque(this.listaDeProdutos.get(c), -this.listaDeProdutos.get(c).getQtd());
 
                 listaDeProdutos.remove(c);
 
@@ -169,38 +170,28 @@ public class Mercado implements InterfaceMercado {
         System.out.println("Valor total de lucro de vendas: R$" + estoque.getTotValorVenda());
     }
 
-    private void atualizarEstoque(Produto produto, int e) {
+    private void atualizarEstoque(Produto produto, float qtd) {
 
-        int qtde = 1;
-
-        if (e == 2)  {
-            qtde *= (-1);
-        } else if (e != 1) {
-            qtde = e * (-1);
-        } else {
-            qtde = produto.getQtd();
-        }
-
-        estoque.setTotProdutos(qtde);
-        estoque.setTotValorProdutos(produto.getPreco() * (float)qtde);
+        estoque.setTotProdutos((int)qtd);
+        estoque.setTotValorProdutos(produto.getPreco() * qtd);
 
         if (produto.getTipo().equals(Tipos.ELETRONICO.getTag())) {
-            estoque.setTotEletronicos(qtde);
+            estoque.setTotEletronicos((int)qtd);
             return;
         }
         if (produto.getTipo().equals(Tipos.ALIMENTOS.getTag())) {
-            estoque.setTotAlimentos(qtde);
+            estoque.setTotAlimentos((int)qtd);
             return;
         }
         if (produto.getTipo().equals(Tipos.UTILIDADES.getTag())) {
-            estoque.setTotUtilidades(qtde);
+            estoque.setTotUtilidades((int)qtd);
         }
     }
 
     public void vender(String nome, int qtd) {
         Produto produto = retornarProduto(nome);
 
-        while (produto.getQtd() - qtd< 0) {
+        while (produto.getQtd() - qtd < 0) {
             Scanner scanner = new Scanner(System.in);
 
             System.out.print("Inválido. Digite um número acima da quantidade em estoque: ");
@@ -211,7 +202,6 @@ public class Mercado implements InterfaceMercado {
             listaDeProdutos.remove(produto);
         }
 
-        System.out.println("QTD: " + produto.getQtd() + " | PREÇO: " + produto.getPreco());
         estoque.setTotValorVenda((float)qtd * produto.getPVenda());
         produto.setQtd(produto.getQtd() - qtd);
 
@@ -220,7 +210,7 @@ public class Mercado implements InterfaceMercado {
         } else {
             System.out.println(qtd + " item de " + produto.getNome() + " vendidos!");
         }
-        atualizarEstoque(produto, qtd);
+        atualizarEstoque(produto, -qtd);
     }
 
     public Produto retornarProduto(String produto) {

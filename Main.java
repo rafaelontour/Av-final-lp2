@@ -153,7 +153,6 @@ public class Main {
                      qtd2 = Integer.parseInt(op.nextLine());
 
                      mercado1.vender(p, qtd2);
-                     System.out.println("ANTES DO BREAK");
                      break;
 
                 case 8:
