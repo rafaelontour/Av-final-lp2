@@ -191,10 +191,10 @@ public class Mercado implements InterfaceMercado {
     public void vender(String nome, int qtd) {
         Produto produto = retornarProduto(nome);
 
-        while (produto.getQtd() - qtd < 0) {
+        while (produto.getQtd() - qtd < 0 || qtd < 0 || qtd == 0) {
             Scanner scanner = new Scanner(System.in);
 
-            System.out.print("Inválido. Digite um número acima da quantidade em estoque: ");
+            System.out.print("Inválido. Digite uma quantidade válida: ");
             qtd = Integer.parseInt(scanner.nextLine());
         }
 
