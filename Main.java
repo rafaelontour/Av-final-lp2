@@ -92,6 +92,7 @@ public class Main {
                     } else {
                         op.nextLine();
                         String nomeP;
+
                         System.out.print("Digite o nome do produto a ser consultado: ");
                         nomeP = op.nextLine();
 
@@ -100,7 +101,6 @@ public class Main {
                         } else {
                             System.out.println("Produto não cadastrado.");
                         }
-
                     }
                     break;
                 case 3:
@@ -158,7 +158,6 @@ public class Main {
                      qtd2 = Integer.parseInt(op.nextLine());
 
                      mercado1.vender(p, qtd2);
-                     System.out.println("ANTES DO BREAK");
                      break;
 
                 case 8:

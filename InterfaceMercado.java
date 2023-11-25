@@ -5,5 +5,6 @@ public interface InterfaceMercado {
     public void consultar(String produto);
     public void alterar(String pa);
     public void excluir(String item);
+    public void vender(String nome, int qtd);
     public void imprimir();
 }
