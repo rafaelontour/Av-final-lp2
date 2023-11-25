@@ -1,15 +1,20 @@
 package src.mercado;
 import java.util.Scanner;
+import src.mercado.Interface;
 
 public class Main {
     public static void main(String[] args) {
+
+
         Mercado mercado1 = new Mercado("Mercadinho LP2", "UNEB");
         Scanner op = new Scanner(System.in);
         int e;
 
         do {
             Main.menu();
+            Interface janela01 = new Interface();
             e = op.nextInt();
+
 
             switch (e) {
                 case 1:
