@@ -12,7 +12,7 @@ public class Main {
 
         do {
             Main.menu();
-            Interface janela01 = new Interface();
+//            Interface janela01 = new Interface();
             e = op.nextInt();
 
 
@@ -76,11 +76,25 @@ public class Main {
                         }
                     }
 
-                    System.out.print("Preço: R$");
-                    preco = Float.parseFloat(op.nextLine());
-                    
-                    System.out.print("Quantidade: ");
-                    qtd = op.nextInt();
+                    do {
+                        System.out.print("Preço: R$");
+                        preco = Float.parseFloat(op.nextLine());
+
+                        if (preco < 0.1) {
+                            System.out.println("Digite um preço válido!");
+                        }
+                    } while (preco < 0.1);
+
+
+                    do  {
+                        System.out.print("Quantidade: ");
+                        qtd = op.nextInt();
+
+                        if (qtd < 1) {
+                            System.out.println("Digite uma quantidade válida!");
+                        }
+                    } while (qtd < 1);
+
 
                     mercado1.adicionar(nome, preco, qtd, o); // Aqui
 
